@@ -87,8 +87,15 @@ const Navbar = () => {
                         Sign In
                     </NavLink>
                 </li>
+                <li>
+                    <NavLink
+                        to='/sign-up'
+                        className={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                        Sign Up
+                    </NavLink>
+                </li>
                 <li className="flex font-medium">
-                    <button className="flex" onClick={()=>{openCheckoutMenu()}}>
+                    <button className="flex" onClick={() => { openCheckoutMenu() }}>
                         <ShoppingCartIcon className="h-6 w-6" />
                         <p>{cartCounter}</p>
                     </button>

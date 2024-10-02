@@ -1,8 +1,15 @@
 import React from "react";
+import { useLocalStorage } from "../Hooks/useLocalStorage";
 
 const ShoppingCartContext = React.createContext();
 
 const ShoppingCartProvider = ({ children }) => {
+
+    const {
+        item:users,
+        updateStorageItem:setUsers,
+        loading,
+        error } = useLocalStorage('users', []);
 
     //Shopping cart - contador del carrito de compra
     const [cartCounter, setCartCounter] = React.useState(0);
@@ -39,10 +46,9 @@ const ShoppingCartProvider = ({ children }) => {
     //Status to search by title
     const [searchByTitle, setSearchByTitle] = React.useState('');
 
-    //items de la API
+    //items - de la API
     const [items, setItems] = React.useState(null);
-
-    //items filtrados por busqueda de titulo
+    //items - filtrados por busqueda de titulo
     const [filteredItems, setFilteredItems] = React.useState(null);
 
     //estado de categoria
@@ -64,10 +70,10 @@ const ShoppingCartProvider = ({ children }) => {
     React.useEffect(() => {
         if (items && searchByTitle) {
             const filteredItems = items.filter(
-                (item) => 
+                (item) =>
                     item.title.toLowerCase().includes(searchByTitle.toLowerCase()));
             setFilteredItems(filteredItems);
-        }else{
+        } else {
             setFilteredItems(null);
         }
     }, [items, searchByTitle]);
