@@ -1,15 +1,46 @@
 import React from "react";
+import { v4 as uuidv4 } from 'uuid';
 import { useLocalStorage } from "../Hooks/useLocalStorage";
 
 const ShoppingCartContext = React.createContext();
 
 const ShoppingCartProvider = ({ children }) => {
 
+    // const usersTest = [
+    //     {
+    //         id: uuidv4(),
+    //         email: 'juan@platzi.com',
+    //         password: 'juan123'
+    //     },
+    //     {
+    //         id: uuidv4(),
+    //         email: 'pepe@platzi.com',
+    //         password: 'pepe123'
+    //     },
+    //     {
+    //         id: uuidv4(),
+    //         email: 'pedro@platzi.com',
+    //         password: 'pedro123'
+    //     },
+    //     {
+    //         id: uuidv4(),
+    //         email: 'pablo@platzi.com',
+    //         password: 'pablo123'
+    //     }
+    // ]
+
+    // localStorage.setItem('users', JSON.stringify(usersTest));
+    // localStorage.removeItem('users');
+
     const {
-        item:users,
-        updateStorageItem:setUsers,
-        loading,
-        error } = useLocalStorage('users', []);
+        item: users,
+        updateStorageItem: setUsers } = useLocalStorage('users', []);
+
+    const {
+        item: auth,
+        updateStorageItem: setAuth } = useLocalStorage('auth', {});
+
+    const [globalAlert, setGlobalAlert] = React.useState({ type: '', messages: [], duration: null });
 
     //Shopping cart - contador del carrito de compra
     const [cartCounter, setCartCounter] = React.useState(0);
@@ -54,6 +85,9 @@ const ShoppingCartProvider = ({ children }) => {
     //estado de categoria
     const [categoryId, setCategoryId] = React.useState(0);
 
+    //MODAL
+    const [openModal, setOpenModal] = React.useState(false);
+
     React.useEffect(() => {
         try {
             fetch(`https://api.escuelajs.co/api/v1/products/?categoryId=${categoryId}`)
@@ -80,6 +114,8 @@ const ShoppingCartProvider = ({ children }) => {
 
     return (
         <ShoppingCartContext.Provider value={{
+            globalAlert,
+            setGlobalAlert,
             updateCartCounter,
             cartCounter,
             setCartCounter,
@@ -104,7 +140,13 @@ const ShoppingCartProvider = ({ children }) => {
             filteredItems,
             setFilteredItems,
             categoryId,
-            setCategoryId
+            setCategoryId,
+            users,
+            setUsers,
+            auth,
+            setAuth,
+            openModal,
+            setOpenModal
         }}>
             {children}
         </ShoppingCartContext.Provider>
