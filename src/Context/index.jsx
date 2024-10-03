@@ -1,36 +1,9 @@
 import React from "react";
-import { v4 as uuidv4 } from 'uuid';
 import { useLocalStorage } from "../Hooks/useLocalStorage";
 
 const ShoppingCartContext = React.createContext();
 
 const ShoppingCartProvider = ({ children }) => {
-
-    // const usersTest = [
-    //     {
-    //         id: uuidv4(),
-    //         email: 'juan@platzi.com',
-    //         password: 'juan123'
-    //     },
-    //     {
-    //         id: uuidv4(),
-    //         email: 'pepe@platzi.com',
-    //         password: 'pepe123'
-    //     },
-    //     {
-    //         id: uuidv4(),
-    //         email: 'pedro@platzi.com',
-    //         password: 'pedro123'
-    //     },
-    //     {
-    //         id: uuidv4(),
-    //         email: 'pablo@platzi.com',
-    //         password: 'pablo123'
-    //     }
-    // ]
-
-    // localStorage.setItem('users', JSON.stringify(usersTest));
-    // localStorage.removeItem('users');
 
     const {
         item: users,

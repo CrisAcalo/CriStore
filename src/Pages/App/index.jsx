@@ -11,19 +11,33 @@ import Navbar from '../../Components/Navbar';
 import Layout from '../../Components/Layout';
 import SignUp from '../SignUp';
 import CheckoutSideMenu from '../../Components/CheckSideMenu';
+import RequireAuth from '../../Components/RequireAuth';
+import NotAuth from '../../Components/NotAuth';
 import './App.css';
 
 const AppRoutes = () => {
   let routes = useRoutes([
-    { path: '/', element: <Home /> },
-    { path: '/category/:catName', element: <Home /> },
-    { path: '/my-account', element: <MyAccount /> },
-    { path: '/my-order', element: <MyOrder /> },
-    { path: '/my-order/:id', element: <MyOrder /> },
-    { path: '/my-orders', element: <MyOrders /> },
-    { path: '/my-orders/last', element: <MyOrder /> },
-    { path: '/sign-in', element: <SignIn /> },
-    { path: '/sign-up', element: <SignUp /> },
+    {
+      path: '/',
+      element: <RequireAuth />,
+      children: [
+        { path: '/', element: <Home /> },
+        { path: '/category/:catName', element: <Home /> },
+        { path: '/my-account', element: <MyAccount /> },
+        { path: '/my-order', element: <MyOrder /> },
+        { path: '/my-order/:id', element: <MyOrder /> },
+        { path: '/my-orders', element: <MyOrders /> },
+        { path: '/my-orders/last', element: <MyOrder /> },
+      ]
+    },
+    {
+      path: '/',
+      element: <NotAuth />,
+      children: [
+        { path: '/sign-in', element: <SignIn /> },
+        { path: '/sign-up', element: <SignUp /> },
+      ]
+    },
     { path: '/*', element: <NotFound /> },
   ]);
   return routes;
