@@ -26,7 +26,8 @@ function MyAccount() {
             setGlobalAlert({ type: 'error', messages: ['Incorrect password'] })
             return;
         }
-        if (user && user.email != newEmail) {
+        
+        if (user) {
             setGlobalAlert({ type: 'error', messages: ['Email already exists'] })
         } else {
             if (newPassword != newPasswordConfirm) {

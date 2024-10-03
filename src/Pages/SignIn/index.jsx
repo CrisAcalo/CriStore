@@ -17,7 +17,7 @@ function SignIn() {
             setGlobalAlert({ type: 'error', messages: ['User not found'], duration: 2000 })
         } else {
             if (user.password != password) {
-                setGlobalAlert({ type: 'error', messages: ['Incorrect password'] })
+                setGlobalAlert({ type: 'error', messages: ['Incorrect password'], duration: 3000 })
             } else {
                 setAuth(user);
                 setGlobalAlert({ type: 'success', messages: ['Welcome :D'], duration: 2000 });
