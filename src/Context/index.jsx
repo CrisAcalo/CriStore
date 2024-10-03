@@ -60,7 +60,7 @@ const ShoppingCartProvider = ({ children }) => {
     }
     const closeProductDetail = () => { setproductDetailStatus(false); }
 
-    //Checkout - estado del detalle del producto (open/closed)
+    //Checkout - estado del detalle de la orden (open/closed)
     const [checkoutMenuStatus, setCheckoutMenuStatus] = React.useState(false);
     //Checkout - functions
     const openCheckoutMenu = () => {
@@ -82,7 +82,7 @@ const ShoppingCartProvider = ({ children }) => {
     //items - filtrados por busqueda de titulo
     const [filteredItems, setFilteredItems] = React.useState(null);
 
-    //estado de categoria
+    //estado de categoria para filtrar productos en el Home
     const [categoryId, setCategoryId] = React.useState(0);
 
     //MODAL

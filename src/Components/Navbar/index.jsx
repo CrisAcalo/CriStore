@@ -4,12 +4,30 @@ import { ShoppingCartContext } from "../../Context";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 
 const Navbar = () => {
-    const { cartCounter, updateCartCounter, carProducts, openCheckoutMenu } = React.useContext(ShoppingCartContext);
+    const { auth,
+        setAuth,
+        cartCounter,
+        updateCartCounter,
+        carProducts,
+        openCheckoutMenu,
+        setCarProducts,
+        closeProductDetail,
+        closeCheckoutMenu,
+        setOrder
+    } = React.useContext(ShoppingCartContext);
     const activeStyle = 'underline underline-offset-4';
 
     React.useEffect(() => {
         updateCartCounter();
     }, [carProducts]);
+
+    const onLogOut = () => {
+        setAuth({});
+        setCarProducts([]);
+        setOrder({});
+        closeProductDetail();
+        closeCheckoutMenu();
+    }
 
     return (
         <nav className='flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 font-light text-indigo-500 bg-white shadow-md'>
@@ -63,44 +81,63 @@ const Navbar = () => {
                 </li>
             </ul>
             <ul className="flex items-center gap-3">
-                <li className="text-black/60">
-                    crisacalorado@gmail.com
-                </li>
-                <li>
-                    <NavLink
-                        to='/my-orders'
-                        className={({ isActive }) => (isActive ? activeStyle : undefined)}>
-                        MyOrders
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink
-                        to='/my-account'
-                        className={({ isActive }) => (isActive ? activeStyle : undefined)}>
-                        My Account
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink
-                        to='/sign-in'
-                        className={({ isActive }) => (isActive ? activeStyle : undefined)}>
-                        Log In
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink
-                        to='/sign-up'
-                        className={({ isActive }) => (isActive ? activeStyle : undefined)}>
-                        Sign Up
-                    </NavLink>
-                </li>
-                <li className="flex font-medium">
-                    <button className="flex" onClick={() => { openCheckoutMenu() }}>
-                        <ShoppingCartIcon className="h-6 w-6" />
-                        <p>{cartCounter}</p>
-                    </button>
-                </li>
+                {auth && Object.entries(auth).length > 0 &&
+                    <>
+                        <li className="text-gray-400 font-normal">
+                            {auth.email}
+                        </li>
+                        <li>
+                            <NavLink
+                                to='/my-orders'
+                                className={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                                MyOrders
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                to='/my-account'
+                                className={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                                My Account
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                to='/sign-in'
+                                className={({ isActive }) => (isActive ? activeStyle : undefined)}
+                                onClick={() => onLogOut()}>
+                                Log Out
+                            </NavLink>
+                        </li>
+                        <li className="flex font-medium">
+                            <button className="flex" onClick={() => { openCheckoutMenu() }}>
+                                <ShoppingCartIcon className="h-6 w-6" />
+                                <p>{cartCounter}</p>
+                            </button>
+                        </li>
+                    </>
 
+                }
+
+
+                {!auth || Object.entries(auth).length == 0 &&
+                    <>
+                        <li>
+                            <NavLink
+                                to='/sign-in'
+                                className={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                                Log In
+                            </NavLink>
+                        </li>
+
+                        <li>
+                            <NavLink
+                                to='/sign-up'
+                                className={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                                Sign Up
+                            </NavLink>
+                        </li>
+                    </>
+                }
             </ul>
         </nav>
     );
